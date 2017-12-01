@@ -3,4 +3,5 @@
 * [Introduction](README.md)
 * [First Chapter](chapter1.md)
 * [Promise与Defer认识](promiseyu-defer-ren-shi.md)
+* [JS异步编程（promise、deferred对象）](jsyi-bu-bian-cheng-ff08-promise-deferred-dui-xiang-ff09.md)
 
