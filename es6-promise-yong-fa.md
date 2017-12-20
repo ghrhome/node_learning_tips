@@ -2,15 +2,17 @@
 
 一、认识promise对象
 
-        FIREFOX 控制台直接输入  Promise
+```
+    FIREFOX 控制台直接输入  Promise
 
-        我们看到 几个类方法：all   race  reject resolve
+    我们看到 几个类方法：all   race  reject resolve
 
-       还有几个实例方法：then\(\) catch\(\)  Promise\(\)
+   还有几个实例方法：then\(\) catch\(\)  Promise\(\)
 
-      Promise是一个构造函数，自己身上有all、reject、resolve这几个眼熟的方法，原型上有then、catch等同样很眼熟的方法。
+  Promise是一个构造函数，自己身上有all、reject、resolve这几个眼熟的方法，原型上有then、catch等同样很眼熟的方法。
 
-      这么说用Promise new出来的对象肯定就有then、     catch方法喽，没错。
+  这么说用Promise new出来的对象肯定就有then、     catch方法喽，没错。
+```
 
 二、开始奇幻旅程吧
 
@@ -45,6 +47,34 @@ function runAsync(){
 }
 runAsync()
 ```
+
+这时候你应该有两个疑问：1.包装这么一个函数有毛线用？2.resolve\('随便什么数据'\);这是干毛的？
+
+我们继续来讲。在我们包装好的函数最后，会return出Promise对象，也就是说，执行这个函数我们得到了一个Promise对象。还记得Promise对象上有then、catch方法吧？这就是强大之处了，看下面的代码：
+
+```
+runAsync().then(function(data){
+    console.log(data);
+    //后面可以用传过来的数据做些其他操作
+    //......
+});
+```
+
+在runAsync\(\)的返回上直接调用then方法，then接收一个参数，是函数，并且会拿到我们在runAsync中调用resolve时传的的参数。运行这段代码，会在2秒后输出“执行完成”，紧接着输出“随便什么数据”。
+
+这时候你应该有所领悟了，原来then里面的函数就跟我们平时的回调函数一个意思，能够在runAsync这个异步任务执行完成之后被执行。这就是Promise的作用了，简单来讲，就是能把原来的回调写法分离出来，在异步操作执行完后，用链式调用的方式执行回调函数。
+
+你可能会不屑一顾，那么牛逼轰轰的Promise就这点能耐？我把回调函数封装一下，给runAsync传进去不也一样吗，就像这样：
+
+
+
+
+
+
+
+
+
+
 
 
 
