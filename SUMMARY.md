@@ -7,4 +7,5 @@
 * [关于css类名中通配符的使用](guan-yu-css-lei-ming-zhong-tong-pei-fu-de-shi-yong.md)
 * [ES6 Promise 用法](es6-promise-yong-fa.md)
 * [轻松掌握深拷贝和浅拷贝](qing-song-zhang-wo-shen-kao-bei-he-qian-kao-bei.md)
+* [移动端Modal组件开发杂谈](yi-dong-duan-modal-zu-jian-kai-fa-za-tan.md)
 
