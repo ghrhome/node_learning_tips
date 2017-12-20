@@ -11,4 +11,5 @@
 * [web调试优化-chrome开发者工具不完全指南](webdiao-shi-you-5316-chrome-kai-fa-zhe-gong-ju-bu-wan-quan-zhi-nan.md)
 * [微信h5支付开发指南](wei-xin-h5-zhi-fu-kai-fa-zhi-nan.md)
 * [编写自己的代码库（javascript常用实例的实现与封装）](bian-xie-zi-ji-de-dai-ma-ku-ff08-javascript-chang-yong-shi-li-de-shi-xian-yu-feng-zhuang-ff09.md)
+* [jQuery.extend 函数使用详解](jqueryextend-han-shu-shi-yong-xiang-jie.md)
 
