@@ -16,7 +16,6 @@
 
 > 存放在堆内存中的对象，变量保存的是一个指针，这个指针指向另一个位置。当需要访问引用类型（如对象，数组等）的值时，首先从栈内存中获得该对象的地址指针，然后再从堆内存中取得所需的数据。
 
-  
 **一个简单的例子**
 
 ```
@@ -71,23 +70,21 @@ obj2.c // 此时obj.c 变成了2
 [Object.assign](https://link.juejin.im/?target=https%3A%2F%2Fdeveloper.mozilla.org%2Fzh-CN%2Fdocs%2FWeb%2FJavaScript%2FReference%2FGlobal_Objects%2FObject%2Fassign)也是一个`shallowCopy`
 
 ```
-
 let obj1 = { a: 0 , b: { c: 0}};
   let obj2 = Object.assign({}, obj1);
   console.log(JSON.stringify(obj2)); // { a: 0, b: { c: 0}}
-  
+
   obj1.a = 1;
   console.log(JSON.stringify(obj1)); // { a: 1, b: { c: 0}}
   console.log(JSON.stringify(obj2)); // { a: 0, b: { c: 0}}
-  
+
   obj2.a = 2;
   console.log(JSON.stringify(obj1)); // { a: 1, b: { c: 0}}
   console.log(JSON.stringify(obj2)); // { a: 2, b: { c: 0}}
-  
+
   obj2.b.c = 3;
   console.log(JSON.stringify(obj1)); // { a: 1, b: { c: 3}}
   console.log(JSON.stringify(obj2)); // { a: 2, b: { c: 3}}
-
 ```
 
 ### 如何实现深拷贝
@@ -105,7 +102,6 @@ obj2.b.c = 3;
 console.log(obj2.b.c); // { a: 0 , b: { c: 3}};
 
 console.log(obj1.b.c); // { a: 0 , b: { c: 0}};
-
 ```
 
 该方法够处理JSON格式能表示的所有数据类型，但是无法拷贝对象里面的`函数`，`正则表达式`等，而且会丧失所有的`constructor`，也就是说，将是破坏整条`prototype`链。
@@ -127,18 +123,43 @@ function deepCopy (oldObj, newObj){
         }
     }
 }
-
 ```
 
+[arguments.calle](https://link.juejin.im?target=https%3A%2F%2Fdeveloper.mozilla.org%2Fzh-CN%2Fdocs%2FWeb%2FJavaScript%2FReference%2FFunctions%2Farguments%2Fcallee)
 
+可以在匿名函数中实现递归，此处也可以用
 
+`deepCopy(oldObj[key],newObj[key])`
 
+，该方法的缺陷是，一旦欲拷贝对象和原对象存在相互引用的情况，便可能造成死循环。\(一直往下递归仍然判断为Object即造成死循环\)所以需要加上判断跳出的语句
 
+```
+...
+for(let key in oldObj){
+    if(newObj[key] === oldObj[key]){
+        continue;
+    }
+    ...
+}
+...
+```
 
+方法三：借用工具库
 
+`loadash`有一个`.cloneDeep`的方法可以实现深拷贝。
 
+使用方法：
 
+`obj2 = _.cloneDeep(obj1);`
 
+### 综上：
+
+* 基本类型变量存贮在栈内存区,存放在堆内存中的对象，变量保存的是一个指针。
+* 直接遍历对象一一复制是
+  `浅拷贝`
+  \(shallowCopy\)
+* 深拷贝即是在堆内存区拷贝出一个对象来。
+* 深拷贝当然更占内存，请一定要针对不同的场景做不同的拷贝处理。
 
 
 
