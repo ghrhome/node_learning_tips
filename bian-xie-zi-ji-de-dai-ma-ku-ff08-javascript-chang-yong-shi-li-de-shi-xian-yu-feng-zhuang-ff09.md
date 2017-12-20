@@ -32,8 +32,6 @@ trim: function (str, type) {
             return str;
     }
 }
-
-
 ```
 
 ### 2-2字母大小写切换
@@ -82,7 +80,6 @@ changeCase: function (str, type) {
             return str;
     }
 }
-
 ```
 
 ### 2-3字符串循环复制
@@ -98,8 +95,6 @@ repeatStr: function (str, count) {
     }
     return text;
 }
-
-
 ```
 
 ### 2-4字符串替换
@@ -111,10 +106,9 @@ replaceAll: function (str, AFindText, ARepText) {
     raRegExp = new RegExp(AFindText, "g");
     return str.replace(raRegExp, ARepText);
 }
-
 ```
 
-### 2-5替换\* 
+### 2-5替换\*
 
 ```
 //字符替换*
@@ -158,6 +152,97 @@ replaceStr: function (str, regArr, type, ARepText) {
         return str.replace(Reg, replaceCount)
     }
 }
+```
+
+### 2-6检测字符串
+
+```
+//检测字符串
+//ecDo.checkType('165226226326','phone')
+//result：false
+//大家可以根据需要扩展
+checkType: function (str, type) {
+    switch (type) {
+        case 'email':
+            return /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/.test(str);
+        case 'phone':
+            return /^1[3|4|5|7|8][0-9]{9}$/.test(str);
+        case 'tel':
+            return /^(0\d{2,3}-\d{7,8})(-\d{1,4})?$/.test(str);
+        case 'number':
+            return /^[0-9]$/.test(str);
+        case 'english':
+            return /^[a-zA-Z]+$/.test(str);
+        case 'text':
+            return /^\w+$/.test(str);
+        case 'chinese':
+            return /^[\u4E00-\u9FA5]+$/.test(str);
+        case 'lower':
+            return /^[a-z]+$/.test(str);
+        case 'upper':
+            return /^[A-Z]+$/.test(str);
+        default:
+            return true;
+    }
+}
+
+```
+
+### 2-7 检测密码强度
+
+```
+//ecDo.checkPwd('12asdASAD')
+//result：3(强度等级为3)
+checkPwd: function (str) {
+    var nowLv = 0;
+    if (str.length < 6) {
+        return nowLv
+    }
+    if (/[0-9]/.test(str)) {
+        nowLv++
+    }
+    if (/[a-z]/.test(str)) {
+        nowLv++
+    }
+    if (/[A-Z]/.test(str)) {
+        nowLv++
+    }
+    if (/[\.|-|_]/.test(str)) {
+        nowLv++
+    }
+    return nowLv;
+}
+
+```
+
+### 2-8随机码（toString详解）
+
+```
+//count取值范围0-36
+//ecDo.randomWord(10)
+//result："2584316588472575"
+//ecDo.randomWord(14)
+//result："9b405070dd00122640c192caab84537"
+//ecDo.randomWord(36)
+//result："83vhdx10rmjkyb9"
+randomWord: function (count) {
+    return Math.random().toString(count).substring(2);
+}
+
+```
+
+### 2-9查找字符串
+
+可能标题会有点误导，下面我就简单说明一个需求，在字符串`'sad44654blog5a1sd67as9dablog4s5d16zxc4sdweasjkblogwqepaskdkblogahseiuadbhjcibloguyeajzxkcabloguyiwezxc967'`中找出'blog'的出现次数。代码如下
+
+```
+//var strTest='sad44654blog5a1sd67as9dablog4s5d16zxc4sdweasjkblogwqepaskdkblogahseiuadbhjcibloguyeajzxkcabloguyiwezxc967'
+//ecDo.countStr(strTest,'blog')
+//result：6
+countStr: function (str, strSplit) {
+    return str.split(strSplit).length - 1
+}
+
 ```
 
 
