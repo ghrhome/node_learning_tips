@@ -1,4 +1,4 @@
-#  编写自己的代码库（javascript常用实例的实现与封装）
+# 编写自己的代码库（javascript常用实例的实现与封装）
 
 ## 3.数组操作
 
@@ -10,7 +10,6 @@ removeRepeatArray: function (arr) {
         return self.indexOf(item) === index;
     });
 }
-
 ```
 
 ### 3-2数组顺序打乱
@@ -21,7 +20,6 @@ upsetArr: function (arr) {
         return Math.random() - 0.5
     });
 },
-
 ```
 
 ### 3-3数组最大值最小值
@@ -35,7 +33,6 @@ maxArr: function (arr) {
 minArr: function (arr) {
     return Math.min.apply(null, arr);
 }
-
 ```
 
 ### 3-4数组求和，平均值
@@ -68,7 +65,6 @@ covArr: function (arr) {
 randomOne: function (arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
-
 ```
 
 ### 3-6返回数组（字符串）一个元素出现的次数
@@ -89,7 +85,7 @@ getEleCount: function (obj, ele) {
 }
 ```
 
-### 3-7返回数组（字符串）出现最多的几次元素和出现次数 \#\#\#
+### 3-7返回数组（字符串）出现最多的几次元素和出现次数 \#\#\
 
 ```
 //arr, rank->长度，默认为数组长度，ranktype，排序方式，默认降序
@@ -133,7 +129,6 @@ getCount: function (arr, rank, ranktype) {
     var rank1 = rank || arr1.length;
     return arr1.slice(0, rank1);
 }
-
 ```
 
 ### 3-8得到n1-n2下标的数组
@@ -146,7 +141,6 @@ getCount: function (arr, rank, ranktype) {
 getArrayNum: function (arr, n1, n2) {
     return arr.slice(n1, n2);
 }
-
 ```
 
 ### 3-9筛选数组
@@ -196,7 +190,7 @@ getOptionArray: function (arr, keys) {
 }
 ```
 
-### 3-11 排除对象数组某些项 
+### 3-11 排除对象数组某些项
 
 ```
 //var arr=[{a:1,b:2,c:9},{a:2,b:3,c:5},{a:5,b:9},{a:4,b:2,c:5},{a:4,b:5,c:7}]
@@ -219,7 +213,6 @@ filterOptionArray: function (arr, keys) {
     }
     return newArr
 }
-
 ```
 
 ### 3-12 对象数组排序
@@ -240,7 +233,6 @@ arraySort: function (arr, sortText) {
     }
     return _arr;
 }
-
 ```
 
 ### 3-13 数组扁平化
@@ -261,6 +253,36 @@ steamroller: function (arr) {
         }
     }
     return newArr;
+}
+```
+
+## 4.基础DOM操作
+
+这个部分代码其实参考jquery的一些函数写法，唯一区别就是调用不用，参数一样.  
+比如下面的栗子
+
+```
+//设置对象内容
+jquery：$('#xxx').html('hello world');
+现在：ecDo.html(document.getElementById('xxx'),'hello world')
+//获取对象内容
+jquery：$('#xxx').html();
+现在：ecDo.html(document.getElementById('xxx'))
+
+```
+
+### 4-1检测对象是否有哪个类名
+
+```
+//检测对象是否有哪个类名
+hasClass: function (obj, classStr) {
+    if (obj.className && this.trim(obj.className, 1) !== "") {
+        var arr = obj.className.split(/\s+/); //这个正则表达式是因为class可以有多个,判断是否包含
+        return (arr.indexOf(classStr) == -1) ? false : true;
+    }
+    else {
+        return false;
+    }
 }
 
 ```
