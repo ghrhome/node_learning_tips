@@ -185,7 +185,6 @@ checkType: function (str, type) {
             return true;
     }
 }
-
 ```
 
 ### 2-7 检测密码强度
@@ -212,7 +211,6 @@ checkPwd: function (str) {
     }
     return nowLv;
 }
-
 ```
 
 ### 2-8随机码（toString详解）
@@ -228,7 +226,6 @@ checkPwd: function (str) {
 randomWord: function (count) {
     return Math.random().toString(count).substring(2);
 }
-
 ```
 
 ### 2-9查找字符串
@@ -242,6 +239,124 @@ randomWord: function (count) {
 countStr: function (str, strSplit) {
     return str.split(strSplit).length - 1
 }
+```
+
+### 2-10 过滤字符串 
+
+```
+//过滤字符串(html标签，表情，特殊字符)
+//字符串，替换内容（special-特殊字符,html-html标签,emjoy-emjoy表情,word-小写字母，WORD-大写字母，number-数字,chinese-中文），要替换成什么，默认'',保留哪些特殊字符
+//如果需要过滤多种字符，type参数使用,分割，如下栗子
+//过滤字符串的html标签，大写字母，中文，特殊字符，全部替换成*,但是特殊字符'%'，'?'，除了这两个，其他特殊字符全部清除
+//var str='asd    654a大蠢sasdasdASDQWEXZC6d5#%^*^&*^%^&*$\\"\'#@!()*/-())_\'":"{}?<div></div><img src=""/>啊实打实大蠢猪自行车这些课程';
+// ecDo.filterStr(str,'html,WORD,chinese,special','*','%?')
+//result："asd    654a**sasdasd*********6d5#%^*^&*^%^&*$\"'#@!()*/-())_'":"{}?*****************"
+filterStr: function (str, type, restr, spstr) {
+    var typeArr = type.split(','), _str = str;
+    for (var i = 0, len = typeArr.length; i < len; i++) {
+        //是否是过滤特殊符号
+        if (typeArr[i] === 'special') {
+            var pattern, regText = '$()[]{}?\|^*+./\"\'+';
+            //是否有哪些特殊符号需要保留
+            if (spstr) {
+                var _spstr = spstr.split(""), _regText = "[^0-9A-Za-z\\s";
+                for (var j = 0, len1 = _spstr.length; j < len1; j++) {
+                    if (regText.indexOf(_spstr[j]) === -1) {
+                        _regText += _spstr[j];
+                    }
+                    else {
+                        _regText += '\\' + _spstr[j];
+                    }
+                }
+                _regText += ']'
+                pattern = new RegExp(_regText, 'g');
+            }
+            else {
+                pattern = new RegExp("[^0-9A-Za-z\\s]", 'g')
+            }
+        }
+        var _restr = restr || '';
+        switch (typeArr[i]) {
+            case 'special':
+                _str = _str.replace(pattern, _restr);
+                break;
+            case 'html':
+                _str = _str.replace(/<\/?[^>]*>/g, _restr);
+                break;
+            case 'emjoy':
+                _str = _str.replace(/[^\u4e00-\u9fa5|\u0000-\u00ff|\u3002|\uFF1F|\uFF01|\uff0c|\u3001|\uff1b|\uff1a|\u3008-\u300f|\u2018|\u2019|\u201c|\u201d|\uff08|\uff09|\u2014|\u2026|\u2013|\uff0e]/g, _restr);
+                break;
+            case 'word':
+                _str = _str.replace(/[a-z]/g, _restr);
+                break;
+            case 'WORD':
+                _str = _str.replace(/[A-Z]/g, _restr);
+                break;
+            case 'number':
+                _str = _str.replace(/[0-9]/g, _restr);
+                break;
+            case 'chinese':
+                _str = _str.replace(/[\u4E00-\u9FA5]/g, _restr);
+                break;
+        }
+    }
+    return _str;
+}
+```
+
+### 2-11格式化处理字符串
+
+```
+//ecDo.formatText('1234asda567asd890')
+//result："12,34a,sda,567,asd,890"
+//ecDo.formatText('1234asda567asd890',4,' ')
+//result："1 234a sda5 67as d890"
+//ecDo.formatText('1234asda567asd890',4,'-')
+//result："1-234a-sda5-67as-d890"
+formatText: function (str, size, delimiter) {
+    var _size = size || 3, _delimiter = delimiter || ',';
+    var regText = '\\B(?=(\\w{' + _size + '})+(?!\\w))';
+    var reg = new RegExp(regText, 'g');
+    return str.replace(reg, _delimiter);
+}
+```
+
+### 2-12找出最长单词
+
+```
+//ecDo.longestWord('Find the Longest word in a String')
+//result：7
+//ecDo.longestWord('Find|the|Longest|word|in|a|String','|')
+//result：7
+longestWord: function (str, splitType) {
+    var _splitType = splitType || /\s+/g,
+        _max = 0,_item='';
+    var strArr = str.split(_splitType);
+    strArr.forEach(function (item) {
+        if (_max < item.length) {
+            _max = item.length
+            _item=item;
+        }
+    })
+    return {el:_item,max:_max};
+}
+```
+
+### 2-13句中单词首字母大写 
+
+```
+/这个我也一直在纠结，英文标题，即使是首字母大写，也未必每一个单词的首字母都是大写的，但是又不知道哪些应该大写，哪些不应该大写
+//ecDo.titleCaseUp('this is a title')
+//"This Is A Title"
+titleCaseUp: function (str, splitType) {
+    var _splitType = splitType || /\s+/g;
+    var strArr = str.split(_splitType),
+        result = "", _this = this
+    strArr.forEach(function (item) {
+        result += _this.changeCase(item, 1) + ' ';
+    })
+    return this.trim(result, 4)
+}  
 
 ```
 
