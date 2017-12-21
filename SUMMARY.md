@@ -12,7 +12,7 @@
 * [微信h5支付开发指南](wei-xin-h5-zhi-fu-kai-fa-zhi-nan.md)
 * [编写自己的代码库（javascript常用实例的实现与封装）](bian-xie-zi-ji-de-dai-ma-ku-ff08-javascript-chang-yong-shi-li-de-shi-xian-yu-feng-zhuang-ff09.md)
 * [jQuery.extend 函数使用详解](jqueryextend-han-shu-shi-yong-xiang-jie.md)
-* 9.格式化字符
+* [9.格式化字符](9ge-shi-hua-zi-fu.md)
 * [12.导入excel内容](12dao-ru-excel-nei-rong.md)
 * [编写自己的代码库（javascript常用实例的实现与封装\)2](shou-hou-i-2017-nian-12-yue-11-ri-bian-xie-zi-ji-de-dai-ma-ku-ff08-javascript-chang-yong-shi-li-de-shi-xian-yu-feng-88c529-2.md)
 
