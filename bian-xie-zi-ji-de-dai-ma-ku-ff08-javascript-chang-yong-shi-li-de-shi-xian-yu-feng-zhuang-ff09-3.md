@@ -79,8 +79,7 @@ upDigit: function (n) {
         //s = p + unit[0][i] + s;
     }
     return head + s.replace(/(零.)*零元/, '元').replace(/(零.)+/g, '零').replace(/^整$/, '零元整');
-} 
-
+}
 ```
 
 ### 5-4获取，设置url参数
@@ -139,8 +138,6 @@ randomNumber: function (n1, n2) {
         return Math.round(Math.random() * 255)
     }
 }
-
-
 ```
 
 ### 5-6随进产生颜色
@@ -194,7 +191,6 @@ getEndTime: function (endTime) {
 这个适配的方法很多，我就写我自己用的方法。大家也可以去我回答过得一个问题那里看更详细的说明！[移动端适配问题](https://link.juejin.im/?target=https%3A%2F%2Fsegmentfault.com%2Fq%2F1010000010179208%2Fa-1020000010179558)
 
 ```
-
 getFontSize: function (_client) {
     var doc = document,
         win = window;
@@ -225,7 +221,6 @@ img{
 }
 //这样的设置，比如在屏幕宽度大于等于750px设备上，1rem=100px；图片显示就是宽高都是100px
 //比如在iphone6(屏幕宽度：375)上，375/750*100=50px;就是1rem=50px;图片显示就是宽高都是50px;
-
 ```
 
 ### 5-9ajax
@@ -286,11 +281,9 @@ ajax: function (obj) {
         }
     };
 }
-
-
 ```
 
-### 5-10图片懒加载 
+### 5-10图片懒加载
 
 ```
 //图片没加载出来时用一张图片代替
@@ -365,12 +358,182 @@ loadImg: function (className, num, errorUrl) {
         }
     }
 }
+```
+
+### 5-11关键词加标签 
+
+```
+//这两个函数多用于搜索的时候，关键词高亮
+//创建正则字符
+//ecDo.createKeyExp([前端，过来])
+//result:(前端|过来)/g
+createKeyExp: function (strArr) {
+    var str = "";
+    for (var i = 0; i < strArr.length; i++) {
+        if (i != strArr.length - 1) {
+            str = str + strArr[i] + "|";
+        } else {
+            str = str + strArr[i];
+        }
+    }
+    return "(" + str + ")";
+},
+//关键字加标签（多个关键词用空格隔开）
+//ecDo.findKey('守侯我oaks接到了来自下次你离开快乐吉祥留在开城侯','守侯 开','i')
+//"<i>守侯</i>我oaks接到了来自下次你离<i>开</i>快乐吉祥留在<i>开</i>城侯"
+findKey: function (str, key, el) {
+    var arr = null,
+        regStr = null,
+        content = null,
+        Reg = null,
+        _el = el || 'span';
+    arr = key.split(/\s+/);
+    //alert(regStr); //    如：(前端|过来)
+    regStr = this.createKeyExp(arr);
+    content = str;
+    //alert(Reg);//        /如：(前端|过来)/g
+    Reg = new RegExp(regStr, "g");
+    //过滤html标签 替换标签，往关键字前后加上标签
+    content = content.replace(/<\/?[^>]*>/g, '')
+    return content.replace(Reg, "<" + _el + ">$1</" + _el + ">");
+}
+```
+
+### 5-12数据类型判断 
+
+```
+//ecDo.istype([],'array')
+//true
+//ecDo.istype([])
+//'[object Array]'
+istype: function (o, type) {
+    if (type) {
+        var _type = type.toLowerCase();
+    }
+    switch (_type) {
+        case 'string':
+            return Object.prototype.toString.call(o) === '[object String]';
+        case 'number':
+            return Object.prototype.toString.call(o) === '[object Number]';
+        case 'boolean':
+            return Object.prototype.toString.call(o) === '[object Boolean]';
+        case 'undefined':
+            return Object.prototype.toString.call(o) === '[object Undefined]';
+        case 'null':
+            return Object.prototype.toString.call(o) === '[object Null]';
+        case 'function':
+            return Object.prototype.toString.call(o) === '[object Function]';
+        case 'array':
+            return Object.prototype.toString.call(o) === '[object Array]';
+        case 'object':
+            return Object.prototype.toString.call(o) === '[object Object]';
+        case 'nan':
+            return isNaN(o);
+        case 'elements':
+            return Object.prototype.toString.call(o).indexOf('HTML') !== -1
+        default:
+            return Object.prototype.toString.call(o)
+    }
+}
+
 
 ```
 
+### 5-13手机类型判断
+
+```
+browserInfo: function (type) {
+    switch (type) {
+        case 'android':
+            return navigator.userAgent.toLowerCase().indexOf('android') !== -1
+        case 'iphone':
+            return navigator.userAgent.toLowerCase().indexOf('iphone') !== -1
+        case 'ipad':
+            return navigator.userAgent.toLowerCase().indexOf('ipad') !== -1
+        case 'weixin':
+            return navigator.userAgent.toLowerCase().indexOf('micromessenger') !== -1
+        default:
+            return navigator.userAgent.toLowerCase()
+    }
+}
+
+```
+
+### 5-14函数节流
+
+```
+//多用于鼠标滚动，移动，窗口大小改变等高频率触发事件
+// var count=0;
+// function fn1(){
+//     count++;
+//     console.log(count)
+// }
+// //100ms内连续触发的调用，后一个调用会把前一个调用的等待处理掉，但每隔200ms至少执行一次
+// document.onmousemove=ecDo.delayFn(fn1,100,200)
+delayFn: function (fn, delay, mustDelay) {
+    var timer = null;
+    var t_start;
+    return function () {
+        var context = this, args = arguments, t_cur = +new Date();
+        //先清理上一次的调用触发（上一次调用触发事件不执行）
+        clearTimeout(timer);
+        //如果不存触发时间，那么当前的时间就是触发时间
+        if (!t_start) {
+            t_start = t_cur;
+        }
+        //如果当前时间-触发时间大于最大的间隔时间（mustDelay），触发一次函数运行函数
+        if (t_cur - t_start >= mustDelay) {
+            fn.apply(context, args);
+            t_start = t_cur;
+        }
+        //否则延迟执行
+        else {
+            timer = setTimeout(function () {
+                fn.apply(context, args);
+            }, delay);
+        }
+    };
+}
+```
+
+## 6.封装成形
+
+> 可能有小伙伴会有疑问，这样封装，调用有点麻烦，为什么不直接在原型上面封装，调用方便。比如下面的栗子！
+
+```
+
+String.prototype.trim=function(type){
+    switch (type){
+        case 1:return this.replace(/\s+/g,"");
+        case 2:return this.replace(/(^\s*)|(\s*$)/g, "");
+        case 3:return this.replace(/(^\s*)/g, "");
+        case 4:return this.replace(/(\s*$)/g, "");
+        default:return this;
+    }
+}
+//'  12345 6 8 96  '.trim(1)
+//"123456896"
+//比这样trim('  12345 6 8 96  ',1)调用方便。
+//但是，这样是不推荐的做法，这样就污染了原生对象String,别人创建的String也会被污染，造成不必要的开销。
+//更可怕的是，万一自己命名的跟原生的方法重名了，就被覆盖原来的方法了
+//String.prototype.substr=function(){console.log('asdasd')}  
+//'asdasdwe46546'.substr()
+//asdasd 
+//substr方法有什么作用，大家应该知道，不知道的可以去w3c看下
 
 
+```
 
+所以在原生对象原型的修改很不推荐！至少很多的公司禁止这样操作！
+
+所以建议的封装姿势是
+
+```
+var ecDo={
+    trim:function(){..},
+    changeCase:function(){..}...
+}
+```
 
 
 
