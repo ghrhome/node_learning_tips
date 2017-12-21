@@ -302,7 +302,6 @@ addClass: function (obj, classStr) {
         }
     }
 }
-
 ```
 
 ### 4-3删除类名
@@ -378,7 +377,6 @@ siblings: function (obj, opt) {
     }
     return a;
 }
-
 ```
 
 ### 4-6设置样式
@@ -408,8 +406,6 @@ text: function (obj) {
         obj.innerHTML = this.filterStr(arguments[1],'html');
     }
 }
-
-
 ```
 
 ### 4-8显示隐藏
