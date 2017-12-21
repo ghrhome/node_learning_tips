@@ -268,7 +268,6 @@ jquery：$('#xxx').html('hello world');
 //获取对象内容
 jquery：$('#xxx').html();
 现在：ecDo.html(document.getElementById('xxx'))
-
 ```
 
 ### 4-1检测对象是否有哪个类名
@@ -284,7 +283,6 @@ hasClass: function (obj, classStr) {
         return false;
     }
 }
-
 ```
 
 
