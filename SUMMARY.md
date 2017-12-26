@@ -18,4 +18,5 @@
 * [编写自己的代码库（javascript常用实例的实现与封装）3](bian-xie-zi-ji-de-dai-ma-ku-ff08-javascript-chang-yong-shi-li-de-shi-xian-yu-feng-zhuang-ff09-3.md)
 * [0-svg-classList低版本浏览器不支持的情况-patch](0-svg-classlistdi-ban-ben-liu-lan-qi-bu-zhi-chi-de-qing-51b5-patch.md)
 * [PDF\_插件展示方案](pdfcha-jian-zhan-shi-fang-an.md)
+* [UUID](uuid.md)
 
