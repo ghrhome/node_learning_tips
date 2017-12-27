@@ -20,4 +20,5 @@
 * [PDF\_插件展示方案](pdfcha-jian-zhan-shi-fang-an.md)
 * [UUID](uuid.md)
 * [Number function](number-function.md)
+* [Date function](date-function.md)
 
