@@ -18,11 +18,11 @@
 // 高度无缝动画方法
 var funTransitionHeight = function(element, time) { // time, 数值，可缺省
     if (typeof window.getComputedStyle == "undefined") return;
-    
+
     var height = window.getComputedStyle(element).height;
 
     element.style.transition = "none";    // 本行2015-05-20新增，mac Safari下，貌似auto也会触发transition, 故要none下~
-   
+
     element.style.height = "auto";
     var targetHeight = window.getComputedStyle(element).height;
     element.style.height = height;
@@ -39,8 +39,27 @@ this.$element
       .removeClass('collapse')
       .addClass('collapsing')[dimension](0)
       .attr('aria-expanded', true)
+```
 
+```
+this.transitioning = 1
 
+var complete = function () {
+      this.$element
+        .removeClass('collapsing')
+        .addClass('collapse in')[dimension]('')
+      this.transitioning = 0
+      this.$element
+        .trigger('shown.bs.collapse')
+}
+
+if (!$.support.transition) return complete.call(this)
+
+var scrollSize = $.camelCase(['scroll', dimension].join('-'))
+
+this.$element
+      .one('bsTransitionEnd', $.proxy(complete, this))
+      .emulateTransitionEnd(Collapse.TRANSITION_DURATION)[dimension](this.$element[0][scrollSize])
 ```
 
 
