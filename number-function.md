@@ -14,7 +14,18 @@
 
   /*  console.log((123456789.12345).formatMoney(2, '.', ','));
     console.log((123456789).formatMoney(2, '.', ','));*/
+```
 
+```
+ //检查非负浮点数
+    function checkNum(num){
+        var patt=/^\d+(\.\d+)?$/g;
+        return patt.test(num);
+    }
+
+    turnover.numberFormat=function(num){
+        return parseFloat(num).formatMoney(2, '.', ',');
+    };
 ```
 
 
