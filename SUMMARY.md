@@ -19,4 +19,5 @@
 * [0-svg-classList低版本浏览器不支持的情况-patch](0-svg-classlistdi-ban-ben-liu-lan-qi-bu-zhi-chi-de-qing-51b5-patch.md)
 * [PDF\_插件展示方案](pdfcha-jian-zhan-shi-fang-an.md)
 * [UUID](uuid.md)
+* [Number function](number-function.md)
 
