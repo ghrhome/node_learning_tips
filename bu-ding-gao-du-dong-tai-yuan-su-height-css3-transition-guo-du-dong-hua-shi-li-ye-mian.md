@@ -62,5 +62,79 @@ this.$element
       .emulateTransitionEnd(Collapse.TRANSITION_DURATION)[dimension](this.$element[0][scrollSize])
 ```
 
+# 实验写法
+
+```
+<style>
+        #animate-test{}
+        #animate-test ul{
+            visibility: hidden;
+        }
+        #animate-test .collapse{display: none;visibility: inherit}
+        #animate-test .collapse.in{display: block;visibility: inherit}
+        #animate-test .collapsing {
+            position: relative;
+            height: 0;
+            overflow: hidden;
+            visibility: inherit;
+            -webkit-transition-property: height, visibility;
+            transition-property: height, visibility;
+            -webkit-transition-duration: 0.35s;
+            transition-duration: 0.35s;
+            -webkit-transition-timing-function: ease;
+            transition-timing-function: ease;
+        }
+    </style>
+```
+
+```
+ <div id="animate-test">
+                        <a class="btn btn-default ys-btn" id="js-show-menu">.....</a>
+                        <ul class="animated collapse">
+                            <li>1</li>
+                            <li>2</li>
+                        </ul>
+                    </div>
+```
+
+```
+ $("#js-show-menu").on("click",function(){
+                var $elem=$(this).next("ul")
+                if($elem.hasClass("collapsing")){
+                    return;
+                }
+                if($elem.hasClass("in")){
+                    $elem.removeClass("collapse in");
+                    var _height=$elem.css("height");
+                    $elem.height(_height);
+                     var _targetHeight=0;
+                     $elem.addClass("collapsing").height(_targetHeight);
+
+                    $elem.one("transitionend",function(){
+                           $elem.removeClass("collapsing").addClass("collapse").height("");
+
+                    });
+
+                }else{
+                    $elem.removeClass("collapse in");
+                    var _targetHeight=$elem.css("height");
+                    var _height=0;
+
+                    $elem.height(_height);
+
+                    $elem.addClass("collapsing").height(_targetHeight);
+
+                    $elem.one("transitionend",function(){
+                        $elem.removeClass("collapsing").addClass("collapse in").height("");
+
+                    });
+                }
+
+
+
+
+            })
+```
+
 
 
