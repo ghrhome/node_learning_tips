@@ -62,6 +62,10 @@ this.$element
       .emulateTransitionEnd(Collapse.TRANSITION_DURATION)[dimension](this.$element[0][scrollSize])
 ```
 
+> bootstrap计算的是scrollheight
+
+# 
+
 # 实验写法
 
 ```
