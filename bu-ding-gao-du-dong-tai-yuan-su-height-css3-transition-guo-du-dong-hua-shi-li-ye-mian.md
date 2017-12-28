@@ -137,5 +137,7 @@ this.$element
             })
 ```
 
+> 如果参考bootstrap方式，先加collapsing,然后用scrollHeight取得元素高度。更简洁
+
 
 
