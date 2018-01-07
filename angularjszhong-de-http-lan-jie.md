@@ -94,8 +94,6 @@ app.factory('myInterceptor',['$q', 'someAsyncService', function($q, someAsyncSer
 }])
 ```
 
-
-
 ■ Session拦截，请求拦截
 
 服务端有2种类型的验证，一个是基于cookie的，一种是基于token的。对于基于token验证，当用户登录，获取一个来自服务端的token，这个token在每一次请求时发送给服务端。
@@ -112,7 +110,7 @@ app.factory('sessionInjector',['SessionService', function(SessionService){
             return config;
         }
     };
-    
+
     return sessionInjector;
 }])
 ```
@@ -128,34 +126,32 @@ app.config(['$httpProvider', function($httpProvider){
 ```
 
 发出一个请求：  
-$http.get\(''\);  
-  
+$http.get\(''\);
+
 拦截前大致是：
 
 {  
-    "transformRequest":\[null\],  
-    "transformResponse":\[null\],  
-    "method":"GET",  
-    "url":"",  
-    "headers":{  
-        "Accept": "application/json, text/plain,\*/\*"  
-    }  
+    "transformRequest":\[null\],  
+    "transformResponse":\[null\],  
+    "method":"GET",  
+    "url":"",  
+    "headers":{  
+        "Accept": "application/json, text/plain,\*/\*"  
+    }  
 }
 
 拦截后，在headers中多两个一个x-session-token字段:
 
 {  
-    "transformRequest":\[null\],  
-    "transformResponse":\[null\],  
-    "method":"GET",  
-    "url":"",  
-    "headers":{  
-        "Accept": "application/json, text/plain,\*/\*",  
-        "x-session-token":......  
-    }  
+    "transformRequest":\[null\],  
+    "transformResponse":\[null\],  
+    "method":"GET",  
+    "url":"",  
+    "headers":{  
+        "Accept": "application/json, text/plain,\*/\*",  
+        "x-session-token":......  
+    }  
 }
-
-
 
 ■ 时间戳，请求和响应拦截
 
@@ -171,7 +167,7 @@ app.factory('timestampMarker',[function(){
             return config;
         }
     };
-    
+
     return timestampMarker;
 }])
 ```
@@ -210,17 +206,68 @@ app.factory('requestRejector',['$q', function($q){
 }])
 ```
 
+拦截请求错误：
 
+```
+app.factory('requestRecoverer',['$q', function($q){
+    var requestRecoverer = {
+        requestError: function(rejectReason){
+            if(rejectReason === 'requestRejector'){
+                //恢复请求
+                return {
+                    transformRequest:[],
+                    transformResponse:[],
+                    method:'GET',
+                    url:'',
+                    headers:{
+                        Accept:'application/json, text/plain, */*'
+                    }
+                };
+            } else {
+                return $q.reject(rejectReason);
+            }
+        }
+    };
+    
+    return requestRecoverer;
+}])
+```
 
+注册拦截器：
 
+```
+app.config(['$httpProvider', function($httpProvider){
+    $httpProvider.interceptors.push('requestRejector');
+    $httpProvider.interceptors.push('requestRecoverer');
+}])
+```
 
+■ Session错误恢复，响应拦截
 
-
-
-
-
-
-
+```
+app.factory('sessionRecoverer',['$q','$injector',function($q, $injector){
+    var sessionRecoverer = {
+        responseError: function(response){
+            //如果Session过期
+            if(response.status == 419){
+                var SessionService = $injector.get('SessionService');
+                var $http = $injector.get('$http');
+                var deferred = $q.defer();
+                
+                //创建一个新的session
+                SessionService.login().then(deferred.resolve, deferred.reject);
+                
+                return deferred.promise.then(function(){
+                    reutrn $http(response.config);
+                })
+            }
+            return $q.reject(response);
+        }
+    };
+    
+    return sessionRecoverer;
+}])
+```
 
 
 
