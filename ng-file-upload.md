@@ -2,28 +2,27 @@
 
 一、ng-file-upload简介
 
-　　是一款轻量级、跨浏览器的angular上传文件指令
+是一款轻量级、跨浏览器的angular上传文件指令
 
 二、特点
 
-　　（1）支持文件上传进度条、取消、暂停
+（1）支持文件上传进度条、取消、暂停
 
-　　（2）支持文件拖放和黏贴图像
+（2）支持文件拖放和黏贴图像
 
-　　（3）支持暂停和取消文件上传
+（3）支持暂停和取消文件上传
 
-　　（4）支持验证文件的类型 / 大小、图像宽度 / 高度、视频 / 音频持续时间（ng-required）
+（4）支持验证文件的类型 / 大小、图像宽度 / 高度、视频 / 音频持续时间（ng-required）
 
-　　（5）支持预览显示选择的图像、视频、音频
+（5）支持预览显示选择的图像、视频、音频
 
-　　（6）支持CORS和直接上传文件的二进制数据\( Upload.$http\(\) \)
+（6）支持CORS和直接上传文件的二进制数据\( Upload.$http\(\) \)
 
-　　.....  
-
+.....
 
 三、用法
 
-　　示例：
+示例：
 
 ```
 <script src="angular.min.js"></script>
@@ -75,6 +74,146 @@ $scope.upload = function (file) {
      }; 
 }]);
 ```
+
+涉及参数：
+
+　　（1）文件选择：----适用于：
+
+&lt;button&gt;、&lt;div&gt;、&lt;input　type=file&gt;
+
+ngf-select=“true”：默认为true,使得在这个元素上可以选择文件
+
+ng-model="myfiles"：将选择的一个或多个文件与scope模型绑定（通过ngf-multiple和ngf-keep的值可以使得ng-model的值为一个数组或单个文件）
+
+ng-model-rejected="rejfiles"：与不匹配接受通配符的丢弃文件绑定
+
+ng-disabled="selectDisabled"：与一个boolean值绑定，来决定是否禁用文件选择功能
+
+ngf-change="fileSelected\($files, $file, $event, $rejectedFiles\)"：当文件被选择或移除时调用
+
+ngf-multiple="true"：默认为false，为true时表示可以选择多个文件
+
+ngf-capture="'camera'" or "'other'"：允许移动设备使用相机捕获
+
+accept="image/\*"：标准的HTML文件接受的输入属性（依赖于浏览器）
+
+ngf-accept=" 'image/\*' "：用逗号分隔允许的MIME类型来过滤文件
+
+    ngf-validate="{
+         size: {min: 10, max: '20MB'},
+         width: {min: 100, max:10000}, 
+         height: {min: 100, max: 300}, 
+         duration: {min: '10s', max: '5m'}, 
+         accept: '.jpg'
+     }" //  或者 "validate($file)"
+    　　　　```
+    　　　　`ngf-keep="true" or "false"`：默认为false,保存着以前ng-model的值和追加的新文件
+    　　　　`ngf-keep-distinct="true" or "false"`：默认为false，如果ngf-keep设置了的话，则删除重复的选定文件
+    　　　　`ngf-reset-on-click="true" or "false"`：默认为true，可以重置模型和点击输入
+    　　　　`ngf-reset-model-on-click="true" or "false"`：默认为true，单击时重置模型
+    　　　(2)文件删除：----适用于：<button>、<div>
+    >注：除了ngf-drop 、ng-model 、 ngf-change之一，其余属性都是可选的
+
+    　　　　`ngf-drop="true" or "false" `：默认为true,使得在该元素上可以删除文件
+    　　　　`ng-model="myFiles"`：把被删除的文件与scope模型绑定（通过ngf-multiple和ngf-keep的值可以使得ng-model的值为一个数组或单个文件）
+    　　　　`ng-model-rejected="rejFiles"`：与不符合通配合而被删除的文件绑定
+    　　　　`ng-disabled="dropDisabled"`：与一个boolean值绑定，来决定是否禁用文件删除功能
+    　　　　`ngf-change="fileDropped($files, $file, $event, $rejectedFiles)" `：当文件被删除时调用
+    　　　　`ngf-multiple="true" or "false"`：默认为false，为true时表示可以选择多个文件
+    　　　　`ngf-accept="'.pdf,.jpg'"`：用逗号分隔允许的MIME类型来过滤文件
+    ```javascript
+    ngf-validate="{
+         size: {min: 10, max: '20MB'},
+         width: {min: 100, max:10000}, 
+         height: {min: 100, max: 300}, 
+         duration: {min: '10s', max: '5m'}, 
+         accept: '.jpg'
+     }" //  或者 "validate($file)"
+    　　　　```
+     　　　`ngf-allow-dir="true" or "false"`：默认为true，但只在goole浏览器下可以删除
+    ```javascript
+
+    ngf-drag-over-class="{
+        accept:'acceptClass', 
+        reject:'rejectClass', 
+        delay:100
+    }" //or "myDragOverClass" or "calcDragOverClass($event)" 
+    //拖动css类行为：可以是一个字符串，也可以是一个函数（返回一个类名）或者是一个json对象{accept: 'c1', reject: 'c2', delay:10}，默认是 "dragover".  accept和reject只可以在chrome浏览器并且要通过ngf-accept的检测才可以工作，
+
+
+`ngf-drop-available="dropSupported"`：设置scope模型的值为真或假（基于文件的拖拽和释放）  
+`ngf-stop-propagation="true" or "false"`：默认为false，是否传播拖拽和释放事件  
+`ngf-hide-on-drop-not-available="true" or "false"`：默认为false，当文件的拖拽和释放不被支持时隐藏元素
+
+（3）文件预览-----适用于
+
+&lt;
+
+img/
+
+&gt;
+
+、
+
+&lt;
+
+audio
+
+&gt;
+
+、
+
+&lt;
+
+video
+
+&gt;
+
+  
+
+
+ngf-src="file"
+
+：通过设置url，预览被选择的文件
+
+  
+
+
+ngf-background="file"
+
+：设置背景图片的样式
+
+  
+
+
+ngf-no-object-url="true or false"
+
+：默认为false，强制生成base64url而不是对象url
+
+  
+
+
+  
+
+
+作者：木槿惜年2013
+
+  
+
+
+链接：https://www.jianshu.com/p/6e14f9200450
+
+  
+
+
+來源：简书
+
+  
+
+
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
 
 
 
