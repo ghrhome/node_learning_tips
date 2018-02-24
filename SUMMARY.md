@@ -30,4 +30,5 @@
 * [webpack3学习笔记](webpack3xue-xi-bi-ji.md)
 * [webpack3学习笔记——下](webpack3xue-xi-bi-ji-2014-2014-xia.md)
 * [Webpack多入口文件、热更新等体验](webpackduo-ru-kou-wen-jian-3001-re-geng-xin-deng-ti-yan.md)
+* [Webpack 3 + AngularJS1.\* + Bootstrap 4 + Mapbox-gl](webpack-3-+-angularjs1-+-bootstrap-4-+-mapbox-gl.md)
 
