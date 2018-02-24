@@ -137,7 +137,7 @@ webapck 会直接处理`window`或者`global`对象进行模块化包裹。否�
  externals: {
     $: "jQuery"
   }
-  
+
 // index.js
 
 var $ = require("$");
@@ -191,7 +191,6 @@ var Villainhr = _entry_return_;
 // In a separate script...
 
 Villainhr.doSomething();
-
 ```
 
 通过`var`变量定义关键字来申明一个变量，将导出的模块直接复制过去。
@@ -200,7 +199,6 @@ Villainhr.doSomething();
 
 ```
 output.libraryTarget: assign
-
 ```
 
 编译结果为：
@@ -212,7 +210,6 @@ Villainhr = _entry_return_;
 // In a separate script...
 
 Villainhr.doSomething();
-
 ```
 
 这里，就直接全局绑定，如果前面已经定义过`Villainhr`则会默认覆盖。其实和`var`定义没啥区别。
@@ -258,7 +255,6 @@ window.Villainhr.doSomething();
 // or
 
 Villainhr.doSomething();
-
 ```
 
 这里就是通常的导出方案，直接将输出模块绑定到 window 对象上。其实也相当于`var`绑定，直接通过模块名使用。
@@ -273,7 +269,6 @@ output.libraryTarget: "global"
 
 ```
 global["Villainhr"] = _entry_return_;
-
 ```
 
 直接通过 global 对象调用，这个通常用在 NodeJS 的环境。
@@ -290,7 +285,6 @@ output.libraryTarget: "commonjs"
 exports["Villainhr"] = _entry_return_;
 
 require("Villainhr").doSomething();
-
 ```
 
 在引用调用时，直接通过`require()`方法引入。
@@ -305,14 +299,12 @@ require("Villainhr").doSomething();
 
 ```
 module.exports = _entry_return_;
-
 ```
 
 这和`commonjs`类似，不过遵循的是 commonjs2 的规范，是直接将其赋值到 module.exports 上的。具体使用还是需要`require()`引用：
 
 ```
 require("Villainhr").doSomething();
-
 ```
 
 **amd**
@@ -324,7 +316,6 @@ define("Villainhr", [], function()
 {  
 // main body
 });
-
 ```
 
 这里通过 amd 异步加载的规范，来导出具体的文件模块。具体使用是通过`require`方法直接引入使用：
@@ -333,7 +324,6 @@ define("Villainhr", [], function()
 require(['Villainhr'], function(Villainhr) {  
 // xxx
 });
-
 ```
 
 **umd**
@@ -361,7 +351,214 @@ require(['Villainhr'], function(Villainhr) {
 
 也就是 4 选一，如果已经通过 commonjs2 引入的话，则不能在通过其它方式使用。比如，this.Villainhr 这样是访问不到的。
 
-  
+## module 编译设置 {#module 编译设置}
+
+在 module 选项主要就是用设置 webpack 中常用的 loaders。通过`rules`规则来匹配具体应用的文件和 loaders。
+
+### noParse 防止预编译 {#noParse 防止预编译}
+
+noParse 主要用来设置相关的匹配规则，来防止 webpack loaders 对某些文件进行预编译。
+
+基本设置为：
+
+```
+noParse: RegExp | [RegExp] | function
+```
+
+通常，设置的值可以直接为：
+
+```
+noParse: /jquery|lodash/
+
+// or
+
+noParse: function(content) {
+  return /jquery|lodash/.test(content);
+}
+```
+
+这样，jquery 和 loadsh 就不会被 webpack 中的 loaders 捕获并编译了。
+
+### rules 设置匹配规则 {#rules 设置匹配规则}
+
+module.rules 的选项具体是用来设置 loaders 匹配文件的规则。其基本接受类型为 \[Array\]。
+
+```
+module: {
+    rules: [{
+      test: /\.js$/,
+      exclude: /node_modules\/dist/,
+      loader: 'babel-loader'
+    }]
+  },
+```
+
+rules 里面的每个对象都决定了 loaders 的具体类型以及 loaders 作用的具体文件。在 webpack3 中，继承了 webpack2 的基本限定功能，比如`exclude`、`include`等，还额外加入了通过`query`匹配，以及多个 query 的 loader 匹配规则。
+
+#### 文件匹配 {#文件匹配}
+
+在每一条具体的 rule 里面，用来进行匹配文件的选项有：Rule.test, Rule.exclude, Rule.include, Rule.and, Rule.or, Rule.not。
+
+上面三个对象其实挂载到的是`Rule.resource`对象上的，你可以直接写到 Rule 上，也可以写到 Rule.resource 上。这里简单起见，以`rule`为基准。他们的值统一都为`condition`。这个概念，是 webpack 匹配文件提出的。
+
+**condition**
+
+主要用来设置匹配文件的条件规则。可接受的值有：
+
+* ```
+  condition:  [string | RegExp | function | array | object]
+  ```
+* string: 匹配文件的绝对路径
+
+* RegExp: 匹配文件的正则
+* function: 参数为 input 的路径，根据返回的 boolean 来决定是否匹配。
+* array: 里面可以传入多个 condition 匹配规则。
+* object: 不常用，用来匹配 key。
+
+接下来，我们来看一下 condition 在各个选项值中的具体实践。
+
+**test**
+
+test 用来匹配符合条件的 input。设置的值为：
+
+```
+test: [condition]
+```
+
+最常用的还是直接写入正则：
+
+```
+test: /\.jsx$/
+```
+
+**include**
+
+和 test 一样，也是用来匹配符合条件的 input，主要用途是用来设置 依赖文件索引目录。在 include 中，通常设置`string`或者 array of strings。
+
+```
+// 在 entry css 文件中，只能在 app/styles 以及 vendor/styles 中索引依赖文件
+{
+  test: /\.css$/,
+  include: [
+    path.resolve(__dirname, "app/styles"),
+    path.resolve(__dirname, "vendor/styles")
+  ]
+}
+```
+
+**exclude**
+
+设置依赖文件不会存在的目录。
+
+实际上，上面三个命令是一起配合来提高编译速度的。因为默认情况下，webpack loaders 会对所有引入的文件进行 loader 编译，当然，对于 node\_modules 里面成熟的库，我们没比较在进行额外的 loader 编译，直接将其 bundle 即可。
+
+常用设置可以为：
+
+```
+test: /\.js$/,
+loader: 'babel-loader',
+include: [
+    path.resolve(__dirname, "app/src"),
+    path.resolve(__dirname, "app/test")
+],
+exclude: /node_modules/ // 排除编译 node_modules 中的文件
+
+```
+
+剩下的`or`和`not`也是用来设置规则，根据名字大家也可以猜出这两者的含义：
+
+* or\[condition\]：满足其中一种条件即可。例如：
+  `or: [/.*src\/index.*/,/.*abc.*/]`
+* not\[condition\]：都不满足所有的条件。设置方法同上
+
+#### query 匹配 {#query 匹配}
+
+query 匹配具体指的是匹配 url 中的`?`后的字符串。当然，我们也可以在`test`中通过正则来写，不过，webpack3 既然已经提供了 query 的选项，我们也可以直接使用它的配置–`resourceQuery`。
+
+`resourceQuery`用来设置匹配 query 的规则，接受的内容是`condition`。不过，一般直接设置 正则 或者 string 就行：
+
+```
+// 匹配 query 含有 inline 的路径，例如：./villainhr.css?inline 
+{
+  test: /.css$/,
+  resourceQuery: /inline/,
+  use: 'url-loader'
+}
+
+```
+
+另外，如果你想对不同的 query 使用不同的 loader 话，可以直接使用`oneOf`配置。文件资源会默认找到 oneOf 中第一个匹配规则，来调用对应的 loader 处理。
+
+```
+{
+  test: /.css$/,
+  oneOf: [
+    {
+      resourceQuery: /inline/, // villainHR.css?inline
+      use: 'url-loader'
+    },
+    {
+      resourceQuery: /external/, // villainHR.css?external
+      use: 'file-loader'
+    }
+  ]
+}
+```
+
+### loader 编译设置 {#loader 编译设置}
+
+在 webpack2 的时候，主要写法是根据`loaders`和`loader`来进行设定的。不过，在 webpack3 该为根据文件来决定 loader 的加载。这其中，最大的特点就是，将 loaders 替换为了`rules`。例如：
+
+```
+module: {
+    loaders: [
+      {test: /\.css$/, loader: 'style-loader!css-loader'}
+    ]
+  }
+
+// 替换为：
+
+module: {
+    rules: [
+      {
+        test: /\.css$/, use:[
+        'style-loader','css-loader'
+      ]}
+    ]
+  }
+```
+
+按照规范，`use`是用来实际引入 loader 的标签。在 webpack3 时代，还保留了`loader`字段，废除了`query`字段，其实可以在 use 中找到替代。
+
+**loader**
+
+用来定义具体使用的 loader，这里等同于: use:\[loader\]。
+
+**query**
+
+用来限定具体的 loader 使用的配置参数，例如 babel 的配置：
+
+```
+test: /\.js$/,
+loader: 'babel-loader',
+query: {
+    presets: ['es2015']
+}
+```
+
+不过，在 webpack3 中已经废弃了 query，使用`use`中`options`选项：
+
+```
+test: /\.js$/,
+use:[
+   {
+        loader: 'babel-loader',
+        options:{
+            presets: ['es2015']
+        }
+   }
+]
+```
 
 
 
@@ -377,33 +574,5 @@ require(['Villainhr'], function(Villainhr) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 
 
