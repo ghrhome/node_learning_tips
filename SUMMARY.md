@@ -28,4 +28,5 @@
 * [令人困惑的webpack之entry](ling-ren-kun-huo-de-webpack-zhi-entry.md)
 * [webpack\_path与publicPath的区别](webpackpath-yu-publicpath-de-qu-bie.md)
 * [webpack3学习笔记](webpack3xue-xi-bi-ji.md)
+* [webpack3学习笔记——下](webpack3xue-xi-bi-ji-2014-2014-xia.md)
 

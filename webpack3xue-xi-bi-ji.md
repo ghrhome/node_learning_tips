@@ -413,6 +413,7 @@ rules 里面的每个对象都决定了 loaders 的具体类型以及 loaders �
 * RegExp: 匹配文件的正则
 
 * function: 参数为 input 的路径，根据返回的 boolean 来决定是否匹配。
+
 * array: 里面可以传入多个 condition 匹配规则。
 * object: 不常用，用来匹配 key。
 
@@ -567,7 +568,6 @@ resolve 主要是用来解析具体入口文件中，引入依赖文件解析。
 import foo from 'demo/test/villainhr.js')
 // or
 require('demo/test/villainhr.js')
-
 ```
 
 在 webpack 中，提供了 3 种路径解析方式：
@@ -606,7 +606,7 @@ import VR from 'villain';
         根据 extensions 添加尾缀查询。
         找到 villain.js
     */
-        
+
 # node_modules/es6 模块存在
 import VR from 'es6';
     /** 搜索 /src、node_modules 目录，
@@ -614,13 +614,13 @@ import VR from 'es6';
         查看 package.json 文件，
         根据 mainFields 定义的字段索引 packjson，找到 main 字段定义的文件。
     */
-    
+
 # src/demo/dev/index.js 存在
 import VR from 'ABC/dev';
      /** 根据 alias 定义的 ABC 查找，src/demo/ 目录下的文件
          找到 dev 目录，里面没有 package.json 文件
          根据 mainFiles 定义的文件名和 extensions 定义的尾缀找到 index.js 文件
-         
+
 
 // webpack.config.js
  resolve:{
@@ -634,37 +634,7 @@ import VR from 'ABC/dev';
     }
 ```
 
-### 设置模块索引目录 {#设置模块索引目录}
-
-在 webpack 中，主要提供`alias`和`modules`来进行索引目录的设置。
-
-* alias：设置导入路径的简便写法。如果你有大量的文件依赖路径非常长的话，除了使用
-  `modules`设置参考路径之外，还可以根据`alias`来设置路径映射的 key。另外，它还提供了`$`来进行文件的精确匹配，这个看看[文档](https://webpack.js.org/configuration/resolve/#resolve-alias)就行，感觉不常用。例如：
-
-```
-alias: {
-  Villainhr: path.resolve(__dirname, 'src/Villainhr/')
-}
-
-# 如果要获取 src/Villainhr/index.js 的话，可以直接在 import 写入：
-
-import test from 'Villainhr/index';
-
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+###  {#设置模块索引目录}
 
 
 
