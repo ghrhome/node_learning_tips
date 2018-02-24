@@ -32,4 +32,5 @@
 * [Webpack多入口文件、热更新等体验](webpackduo-ru-kou-wen-jian-3001-re-geng-xin-deng-ti-yan.md)
 * [Webpack 3 + AngularJS1.\* + Bootstrap 4 + Mapbox-gl](webpack-3-+-angularjs1-+-bootstrap-4-+-mapbox-gl.md)
 * [CommonsChunkPlugin的一些总结，以及如何分别打包公共代码和第三方库](commonschunkpluginde-yi-xie-zong-jie-ff0c-yi-ji-ru-he-fen-bie-da-bao-gong-gong-dai-ma-he-di-san-fang-ku.md)
+* [用webpack的CommonsChunkPlugin提取公共代码的3种方式](yong-webpack-de-commonschunkplugin-ti-qu-gong-gong-dai-ma-de-3-zhong-fang-shi.md)
 
