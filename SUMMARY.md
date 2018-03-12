@@ -35,4 +35,5 @@
 * [用webpack的CommonsChunkPlugin提取公共代码的3种方式](yong-webpack-de-commonschunkplugin-ti-qu-gong-gong-dai-ma-de-3-zhong-fang-shi.md)
 * [多页面分离资源引用,按需引用JS和css](duo-ye-mian-fen-li-zi-yuan-yin-75282c-an-xu-yin-yong-js-he-css.md)
 * [webpack分离css单独打包](webpackfen-li-css-dan-du-da-bao.md)
+* [Vue 开发\|文件目录结构部署](vue-kai-53d17c-wen-jian-mu-lu-jie-gou-bu-shu.md)
 
