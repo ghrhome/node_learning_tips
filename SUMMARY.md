@@ -42,4 +42,5 @@
 * [webpack学习笔记-3-autoprefixer-loader](webpackxue-xi-bi-8bb0-3-autoprefixer-loader.md)
 * [webpack学习笔记-4-less-loader](webpackxue-xi-bi-8bb0-4-less-loader.md)
 * [webpack学习笔记-5-extract-text-webpack-plugin](webpackxue-xi-bi-8bb0-5-extract-text-webpack-plugin.md)
+* [webpack学习笔记-6-webpack-dev-server](webpackxue-xi-bi-8bb0-6-webpack-dev-server.md)
 
