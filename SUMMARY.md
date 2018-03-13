@@ -36,4 +36,5 @@
 * [多页面分离资源引用,按需引用JS和css](duo-ye-mian-fen-li-zi-yuan-yin-75282c-an-xu-yin-yong-js-he-css.md)
 * [webpack分离css单独打包](webpackfen-li-css-dan-du-da-bao.md)
 * [Vue 开发\|文件目录结构部署](vue-kai-53d17c-wen-jian-mu-lu-jie-gou-bu-shu.md)
+* [ES6这些就够了](es6zhe-xie-jiu-gou-le.md)
 
