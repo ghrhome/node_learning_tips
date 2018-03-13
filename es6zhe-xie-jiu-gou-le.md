@@ -272,7 +272,6 @@ const people = {
     const name = people.name
     const age = people.age
     console.log(name + ' --- ' + age)
-
 ```
 
 是不是觉得很熟悉，没错，在ES6之前我们就是这样获取对象信息的，一个一个获取。现在，解构能让我们从对象或者数组里取出数据存为变量，例如
@@ -301,13 +300,12 @@ ES6中另外一个好玩的特性就是Spread Operator 也是三个点儿...接�
     const color = ['red', 'yellow']
     const colorful = [...color, 'green', 'pink']
     console.log(colorful) //[red, yellow, green, pink]
-    
+
     //对象
     const alp = { fist: 'a', second: 'b'}
     const alphabets = { ...alp, third: 'c' }
     console.log(alphabets) //{ "fist": "a", "second": "b", "third": "c"
 }
-
 ```
 
 有时候我们想获取数组或者对象除了前几项或者除了某几项的其他项
@@ -343,7 +341,6 @@ const first = {
     }
     const total = { ...first, ...second }
     console.log(total) // { a: 1, b: 2, c: 3, d: 4 }
-
 ```
 
 ## 7.import 和 export
@@ -369,7 +366,6 @@ export default App
 
 // 部分导出
 export class App extend Component {};
-
 ```
 
 以前有人问我，导入的时候有没有大括号的区别是什么。下面是我在工作中的总结：
@@ -386,23 +382,106 @@ export class App extend Component {};
 5.当一个文件里出现n多个 export 导出很多模块，导入时除了一个一个导入，也可以用import * as example
 ```
 
+## 8. Promise\( 注：这里解释有些缺陷）
 
+> 在promise之前代码过多的回调或者嵌套，可读性差、耦合度高、扩展性低。通过Promise机制，扁平化的代码机构，大大提高了代码可读性；用同步编程的方式来编写异步代码，保存线性的代码逻辑，极大的降低了代码耦合性而提高了程序的可扩展性。
 
+说白了就是用同步的方式去写异步代码。
 
+发起异步请求
 
+```
+fetch('/api/todos')
+      .then(res => res.json())
+      .then(data => ({ data }))
+      .catch(err => ({ err }));
+```
 
+今天看到一篇关于面试题的很有意思。
 
+```
+setTimeout(function() {
+      console.log(1)
+    }, 0);
+    new Promise(function executor(resolve) {
+      console.log(2);
+      for( var i=0 ; i<10000 ; i++ ) {
+        i == 9999 && resolve();
+      }
+      console.log(3);
+    }).then(function() {
+      console.log(4);
+    });
+    console.log(5);
+```
 
+[Excuse me？这个前端面试在搞事！](https://link.jianshu.com/?t=https://zhuanlan.zhihu.com/p/25407758)
 
+当然以上promise的知识点，这个只是冰山一角。需要更多地去学习应用。
 
+## 9.Generators
 
+生成器（ generator）是能返回一个**迭代器**的函数。生成器函数也是一种函数，最直观的表现就是比普通的function多了个星号\*，在其函数体内可以使用yield关键字,有意思的是函数会在每个yield后暂停。
 
+这里生活中有一个比较形象的例子。咱们到银行办理业务时候都得向大厅的机器取一张排队号。你拿到你的排队号，机器并不会自动为你再出下一张票。也就是说取票机“暂停”住了，直到下一个人再次唤起才会继续吐票。
 
+OK。说说迭代器。当你调用一个generator时，它将返回一个迭代器对象。这个迭代器对象拥有一个叫做next的方法来帮助你重启generator函数并得到下一个值。next方法不仅返回值，它返回的对象具有两个属性：done和value。value是你获得的值，done用来表明你的generator是否已经停止提供值。继续用刚刚取票的例子，每张排队号就是这里的value，打印票的纸是否用完就这是这里的done。
 
+```
+// 生成器
+    function *createIterator() {
+        yield 1;
+        yield 2;
+        yield 3;
+    }
+    
+    // 生成器能像正规函数那样被调用，但会返回一个迭代器
+    let iterator = createIterator();
+    
+    console.log(iterator.next().value); // 1
+    console.log(iterator.next().value); // 2
+    console.log(iterator.next().value); // 3
+```
 
+那生成器和迭代器又有什么用处呢？
 
+围绕着生成器的许多兴奋点都与异步编程直接相关。异步调用对于我们来说是很困难的事，我们的函数并不会等待异步调用完再执行，你可能会想到用回调函数，（当然还有其他方案比如Promise比如Async/await）。
 
+生成器可以让我们的代码进行等待。就不用嵌套的回调函数。使用generator可以确保当异步调用在我们的generator函数运行一下行代码之前完成时暂停函数的执行。
 
+那么问题来了，咱们也不能手动一直调用next\(\)方法，你需要一个能够调用生成器并启动迭代器的方法。就像这样子的
+
+```
+function run(taskDef) { //taskDef即一个生成器函数
+
+        // 创建迭代器，让它在别处可用
+        let task = taskDef();
+
+        // 启动任务
+        let result = task.next();
+    
+        // 递归使用函数来保持对 next() 的调用
+        function step() {
+    
+            // 如果还有更多要做的
+            if (!result.done) {
+                result = task.next();
+                step();
+            }
+        }
+    
+        // 开始处理过程
+        step();
+    
+    }
+
+```
+
+> 生成器与迭代器最有趣、最令人激动的方面，或许就是可创建外观清晰的异步操作代码。你不必到处使用回调函数，而是可以建立貌似同步的代码，但实际上却使用 yield 来等待异步操作结束。
+
+## 总结
+
+ES6的特性远不止于此，但对于我们日常的开发开说。这已经是够够的了。还有很多有意思的方法。比如findIndex...等等。包括用set来完成面试题常客数组去重问题。我和我的小伙伴们都惊呆了!
 
 
 
