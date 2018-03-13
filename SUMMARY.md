@@ -37,5 +37,4 @@
 * [webpack分离css单独打包](webpackfen-li-css-dan-du-da-bao.md)
 * [Vue 开发\|文件目录结构部署](vue-kai-53d17c-wen-jian-mu-lu-jie-gou-bu-shu.md)
 * [ES6这些就够了](es6zhe-xie-jiu-gou-le.md)
-* [CommonsChunkPlugin的一些总结，以及如何分别打包公共代码和第三方库](commonschunkpluginde-yi-xie-zong-jie-ff0c-yi-ji-ru-he-fen-bie-da-bao-gong-gong-dai-ma-he-di-san-fang-ku.md)
 
