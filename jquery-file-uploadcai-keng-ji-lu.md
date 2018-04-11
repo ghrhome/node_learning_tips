@@ -52,11 +52,11 @@ $this.fileupload({
 
 * 挂载方法
 
-    $this.fileupload({options})
-       .bind('fileuploadadd', function (e, data) {/* ... */})
-       .bind('fileuploadsubmit', function (e, data) {/* ... */})
-       .bind('fileuploaddone', function (e, data) {/* ... */})
-       .bind('fileuploadprogressall', function (e, data) {/* ... */})`
+  $this.fileupload\({options}\)  
+       .bind\('fileuploadadd', function \(e, data\) {/_ ... _/}\)  
+       .bind\('fileuploadsubmit', function \(e, data\) {/_ ... _/}\)  
+       .bind\('fileuploaddone', function \(e, data\) {/_ ... _/}\)  
+       .bind\('fileuploadprogressall', function \(e, data\) {/_ ... _/}\)\`
 
 done没有回调函数的问题，有网友说是由于dataType设置为了json，把autoUpload设置为true这都是什么跟什么？！我是使用的手动触发上传，关键代码为‘**$handler.click\(function\(\){data.submit\(\); }\)**’看吧，是使用的submit触发的，而回调函数有**fileuploadsubmit**，那就对应起来啦。
 
@@ -98,7 +98,7 @@ $this.fileupload({options})
     $('#cancelBtn').click(function () {
         jqXHR.abort();
     })
-}) 
+})
 ```
 
 这时候要考虑响应错误信息。
@@ -126,7 +126,6 @@ $this.fileupload({options})
 我尝试了在options对象里**添加自定义属性accessToken**，并在jquery.fileupload.js里对**\_initXHRData**函数做了进一步加工
 
 ```
-
 $this.fileupload({
      url: url,
      autoUpload: false,
@@ -188,10 +187,6 @@ $this.fileupload({
        },    
     })
 ```
-
-
-
-
 
 
 

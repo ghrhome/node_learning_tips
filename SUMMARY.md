@@ -45,4 +45,5 @@
 * [webpack学习笔记-6-webpack-dev-server](webpackxue-xi-bi-8bb0-6-webpack-dev-server.md)
 * [webpack学习笔记-7-开发环境和生产环境](webpackxue-xi-bi-8bb0-7-kai-fa-huan-jing-he-sheng-chan-huan-jing.md)
 * [jQuery File Upload踩坑记录](jquery-file-uploadcai-keng-ji-lu.md)
+* [createObjectURL方法制作前端图片预览上传](createobjecturlfang-fa-zhi-zuo-qian-duan-tu-pian-yu-lan-shang-chuan.md)
 
