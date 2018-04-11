@@ -16,54 +16,53 @@ CSS
 
 ```
 body {
-	margin:0;
+    margin:0;
 }
 .file {
-	display:block;
-	height:120px;
-	width:120px;
-	position:relative;
-	margin:0 auto;
-	overflow:hidden;
-	text-decoration:none;
-	text-indent:0;
-	border:none;
-	margin-top:20px;
+    display:block;
+    height:120px;
+    width:120px;
+    position:relative;
+    margin:0 auto;
+    overflow:hidden;
+    text-decoration:none;
+    text-indent:0;
+    border:none;
+    margin-top:20px;
 }
 .file input {
-	height:120px;
-	width:120px;
-	font-size:100px;
-	margin:0;
-	padding:0;
-	position:absolute;
-	left:0;
-	top:0;
-	opacity:0;
-	z-index:999;
+    height:120px;
+    width:120px;
+    font-size:100px;
+    margin:0;
+    padding:0;
+    position:absolute;
+    left:0;
+    top:0;
+    opacity:0;
+    z-index:999;
 }
 .file img {
-	width:120px;
-	height:120px;
-	position:absolute;
-	left:0;
-	top:0;
-	border:none;
+    width:120px;
+    height:120px;
+    position:absolute;
+    left:0;
+    top:0;
+    border:none;
 }
 #img-box {
-	text-align:center;
-	width:100%;
-	height:120px;
-	margin:0;
-	margin-top:20px;
+    text-align:center;
+    width:100%;
+    height:120px;
+    margin:0;
+    margin-top:20px;
 }
 #img-box img {
-	width:120px;
-	height:120px;
-	margin-right:10px;
-	border:1px solid #eee;
+    width:120px;
+    height:120px;
+    margin-right:10px;
+    border:1px solid #eee;
 }
-
 ```
 
 JS

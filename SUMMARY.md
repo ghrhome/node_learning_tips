@@ -47,4 +47,5 @@
 * [jQuery File Upload踩坑记录](jquery-file-uploadcai-keng-ji-lu.md)
 * [createObjectURL方法制作前端图片预览上传](createobjecturlfang-fa-zhi-zuo-qian-duan-tu-pian-yu-lan-shang-chuan.md)
 * [js图片前端预览之 filereader 和 window.URL.createObjectURL](jstu-pian-qian-duan-yu-lanzhi-filereader-he-window-url-createobjecturl.md)
+* [URL.createObjectURL和URL.revokeObjectURL](urlcreateobjecturlhe-url-revokeobjecturl.md)
 
