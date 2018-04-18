@@ -49,4 +49,5 @@
 * [js图片前端预览之 filereader 和 window.URL.createObjectURL](jstu-pian-qian-duan-yu-lanzhi-filereader-he-window-url-createobjecturl.md)
 * [URL.createObjectURL和URL.revokeObjectURL](urlcreateobjecturlhe-url-revokeobjecturl.md)
 * [handlebars-----由于if的条件不足引出的helper](handlebarsyou-yu-ifde-tiao-jian-bu-zu-yin-chu-de-helper.md)
+* [angular\_ngrepeat-index](angularngrepeat-index.md)
 
