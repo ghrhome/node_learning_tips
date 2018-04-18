@@ -14,5 +14,20 @@
 </li>
 ```
 
+```
+  $scope.$on("initSwiper",function() {
+                        _initSwiper();
+                        //页面事件
+                        //这里暂时先禁掉 table的 tab键
+                        document.onkeydown = function(){
+                            if(event.keyCode == 13||event.keyCode == 9) {
+                                return false;
+                            }
+                        };
+                        $(".table").find("input").attr("tabIndex","-1");
+
+                    });
+```
+
 
 
