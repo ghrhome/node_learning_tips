@@ -50,4 +50,5 @@
 * [URL.createObjectURL和URL.revokeObjectURL](urlcreateobjecturlhe-url-revokeobjecturl.md)
 * [handlebars-----由于if的条件不足引出的helper](handlebarsyou-yu-ifde-tiao-jian-bu-zu-yin-chu-de-helper.md)
 * [angular\_ngrepeat-index](angularngrepeat-index.md)
+* [Promise重写confirm，alert弹出框 .then\(\)](promisezhong-xie-confirm-alert-dan-chu-kuang-then.md)
 
